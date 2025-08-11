@@ -1,3 +1,13 @@
+My final for my data visualization class! I chose this project to go along with a bunch of data I have been working with for months because, well, I know it best. I wish that I had more data for a lot of the spots that I am missing, but I think that it shows how so much is gone from the federal level. I always find it interesting when such a big piece of data is missing from federal agencies that should be able to easily track these types of things in the matter of public health. When I was thinking about how I wanted to do the project, I knew that I wanted to have a slide toggle so you would be able to see the change over time and see just how bad the epidemic has gotten. You can actually see a small shift in the states, too. I used Baker, which was recommened to me by Aida, and I felt like it was kind of confusing and kept on getting caught at first, but once I realized what I was doing it got a lot easier.
+
+
+
+
+
+
+
+
+
 # baker-example-page-template
 
 A demonstration of how to build and publish pages with the [baker](https://github.com/datadesk/baker) build tool.

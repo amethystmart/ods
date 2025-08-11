@@ -1,48 +1,67 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Overdose Trends</title>
 
-{% block styles %}
-<link rel="stylesheet" href="{% static 'styles/app.scss' %}">
-{% endblock styles %}
+  <!-- Libraries as globals -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
 
-{% block scripts %}
-{% script 'app' %}
-{% endblock scripts %}
+  <style>
+    body { font-family: "Courier New", monospace; margin: 20px; }
+    h1, h2 { margin: 0 0 10px; }
+    .section { margin: 32px 0; }
+    .controls { margin: 12px 0; }
+    .quote { max-width: 900px; line-height: 1.5; margin-top: 24px; }
+    #map { width: 960px; height: 600px; border: 0; display: block; }
+    #linechart { width: 960px; height: 400px; border: 0; display: block; }
+  </style>
+</head>
+<body>
 
-{% block content %}
-<article>
-  <header class="container">
-    <h1 class="headline">{{ meta.headline }}</h1>
-    <img src="{% static 'assets/images/baker.jpg' %}" alt="Baker logo" width=250 />
-    <div class="attribution">
-        {% set comma = joiner() %}
-        <p class="byline">
-          By {%- for author in meta.byline -%}
-          {% if not loop.last %}{{ comma() }}{% elif not loop.first %} and{% endif %} <span class="author" itemscope itemtype="http://schema.org/Person"><a itemprop="url" href="{{ author.url }}">{{ author.name }}</a></span>
-          {%- endfor -%}
-        </p>
+  <!-- Map Section -->
+  <div class="section">
+    <h1>Overdose Deaths Over Time Across the Country</h1>
+    <svg id="map" width="960" height="600"></svg>
+    <div class="controls">
+      Year:
+      <input type="range" id="yearSlider" min="1999" max="2022" step="1" value="1999" />
+      <span id="yearLabel">1999</span>
     </div>
-  </header>
-  <div class="container">
-    {% for p in copy.body %}
-        <p class="prose">{{ p.value }}</p>
-    {% endfor %}
-    <table class="table">
-        <caption>Wheat production</caption>
-        <thead>
-            <tr>
-                <th>Year</th>
-                <th>Yield</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for obj in example %}
-            <tr>
-                <td>{{ obj.year }}</td>
-                <td>{{ obj.wheat }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
   </div>
-</article>
-{% endblock content %}
+
+  <!-- NYC Line Chart Section -->
+  <div class="section">
+    <h2>New York City Overdose Deaths Over Time</h2>
+    <svg id="linechart" width="960" height="400"></svg>
+  </div>
+
+  <!-- Quote Section -->
+  <div class="quote">
+    Sheila Vakharia, the deputy director at the Drug Policy Alliance that works in research, said that some of the reasons why we saw a decrease in drug overdoses last year was due to President Biden’s public health policy approach to drugs, but also, other factors in a changing landscape.
+    <br><br>
+    “First and foremost, all of these calls for more access to treatment and supportive services have translated into a lot of people getting the help that they needed… What we mean by that is like naloxone, the opioid overdose reversal medication, but also, there’s two medication treatments for opioid addiction that can cut your risk in half,” she said, referring to methadone and buprenorphine.
+    <br><br>
+    Another reason to blame could be changing usage amongst younger generations.
+    “Smaller numbers of younger people started using these drugs 10, 15 years ago, and they would have been prime candidates to potentially have died of overdose at this point in their drug using careers.”
+    <br><br>
+    One fear, she said, was that passing harsher sentences against fentanyl could lead to more dangerous drugs hitting the street.
+    “One thing that we started to see is that when we passed harsher penalties against fentanyl, it incentivized the introduction of other new potent drugs in the drug supply because, again, as long as demand remains, the supply chain is going to try to meet that demand.”
+    <br><br>
+    She mentioned the Iron Law Prohibition, which was when the prescription opioid drug supply was tightened, a stronger drug, fentanyl, took its place, and more people ended up overdosing.
+    <br><br>
+    To rewind a bit, in 1971, Ronald Reagan declared the first “War on Drugs.” It has become exceptionally notable in terms of how it has shown how policing can heed progress in the drug world.
+    “There’s a lot of evidence suggesting that approach, the law enforcement punitive approach, doesn’t work and that a public health approach is what’s needed,” Oster said.
+    <br><br>
+    Vakharia noted that Biden’s approach could have been one of the reasons why drug overdoses deaths dropped so much.
+    “He did such a good job, really allocating a lot of federal funding, prioritizing a harm reduction prioritizing treatment, prioritizing evidence-based approaches. And, sometimes those kinds of investments take a minute to kick in, but it’s really sustained the efforts over the years.”
+    <br><br>
+    In short, there is seemingly no one all, be all, answer to ending the drug addiction epidemic in the United States. But the effects of the crisis on families has been damning, as millions of people across the country struggle with substance abuse disorders.
+  </div>
+
+  <!-- IMPORTANT: data first, then app -->
+  <script src="scripts/overdoseData.js"></script>
+  <script src="scripts/app.js"></script>
+</body>
+</html>

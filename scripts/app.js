@@ -1,13 +1,11 @@
-// Uses global d3, topojson, and global `overdoseData` defined in scripts/overdoseData.js
 
-// --- Guard: if data is missing, log clearly and bail to avoid breaking the page ---
 if (typeof overdoseData === 'undefined') {
   console.error(
     'overdoseData is not defined. Make sure scripts/overdoseData.js is loaded BEFORE app.js and that it does NOT use `export`.'
   );
 }
 
-// ---------- STATE NAME HELPERS ----------
+
 const stateNames = {
   AL: 'Alabama',
   AK: 'Alaska',
@@ -66,13 +64,13 @@ function toFullName(codeOrName) {
   return codeOrName.length > 2 ? codeOrName : stateNames[codeOrName] || null;
 }
 
-// ---------- MAP ----------
+
 (function initMap() {
   const mapSvg = d3.select('#map');
   const width = +mapSvg.attr('width');
   const height = +mapSvg.attr('height');
 
-  // Build lookup: ratesByYear[year][stateFullName] = record
+  
   const ratesByYear = {};
   if (Array.isArray(overdoseData)) {
     for (const d of overdoseData) {
@@ -103,7 +101,7 @@ function toFullName(codeOrName) {
         .fitSize([width, height], topojson.feature(us, us.objects.states));
       const path = d3.geoPath(projection);
 
-      // Draw states once
+      
       const statePaths = mapSvg
         .selectAll('path.state')
         .data(states)
@@ -113,7 +111,7 @@ function toFullName(codeOrName) {
         .attr('stroke', '#666')
         .attr('stroke-width', 0.5);
 
-      // Update fill by year
+      
       function update(year) {
         const y = String(year);
         statePaths
@@ -134,7 +132,7 @@ function toFullName(codeOrName) {
         });
       }
 
-      // Slider wiring
+      
       const slider = document.getElementById('yearSlider');
       const label = document.getElementById('yearLabel');
       const startYear = slider ? slider.value : 1999;
@@ -155,7 +153,7 @@ function toFullName(codeOrName) {
     });
 })();
 
-// ---------- NYC LINE CHART ----------
+
 (function initNYCLine() {
   const data = [
     { year: 2001, deaths: 792, pct_change: null },
